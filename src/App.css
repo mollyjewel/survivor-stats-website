@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+
+/* Default styling above. Personal below */
+
+body {
+  padding-top: 100px;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#bio-data {
+  min-width: 300px;
+  font-size: 18px;
+}
+
+#bio-data .label-col {
+  max-width: 200px;
+  font-weight: bold;
+}
+
+.MuiFormControl-root {
+  margin: 0 16px 16px 0;
+}
+
+/* overriding bootstrap styling that messes up mui form labels */
+.MuiFormControl-root legend {
+  float: none;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.castPhoto{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width:300px;
+}
