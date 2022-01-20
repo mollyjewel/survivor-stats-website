@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SeasonDataService from "../services/season.service";
 import ContestantDataService from "../services/contestant.service";
 import ContestantSummary from "./ContestantSummary";
+import Grid from '@mui/material/Grid';
 
 
 function SeasonData(props) {
@@ -41,9 +42,15 @@ function SeasonData(props) {
         </h2>
         <h4>Season {season._id}</h4>
       </div>
-      <div>
-        {contestants.map(contestant => { return (<ContestantSummary key={contestant._id} contestant={contestant}/>)})}
-      </div>
+      <Grid container spacing={4}>
+        {contestants.map(contestant => {
+          return (
+            <Grid item xs={4} md={3} lg={2}>
+            <ContestantSummary seasonId={season._id} key={contestant._id} contestant={contestant}/>
+            </Grid>
+          )
+        })}
+      </Grid>
     </div>
   );
 }

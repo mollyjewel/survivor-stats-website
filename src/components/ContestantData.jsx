@@ -8,6 +8,8 @@ import getDateText from "../helpers/date.js";
 import getLocationText from "../helpers/location.js";
 
 import Grid from '@mui/material/Grid';
+import UploadContestantPhoto from './UploadPhotoButton';
+import { DropzoneArea } from 'material-ui-dropzone';
 
 // Contestant Data components
 import FirstName from "./contestantData/FirstName";
@@ -15,6 +17,9 @@ import Birthdate from "./contestantData/Birthdate";
 import Hometown from "./contestantData/Hometown";
 import RaceAndEthnicity from "./contestantData/RaceAndEthnicity";
 import Gender from "./contestantData/Gender";
+import SexualOrientation from "./contestantData/SexualOrientation";
+
+import ContestantSeasonData from "./ContestantSeasonData";
 
 function ContestantData(props) {
     const [contestant, setContestant] = useState({});
@@ -58,7 +63,21 @@ function ContestantData(props) {
       });
     }
 
+    function setSeason(season, index) {
+      let updatedSeasons = [...contestant.seasons];
+      updatedSeasons[index] = season;
+      setContestant(prevContestant => {
+        return {
+          ...prevContestant,
+          seasons: updatedSeasons
+        }
+      });
+    }
+
     React.useEffect(() => {retrieveContestant()}, [props.match.params.id]);
+
+    var lastSeasonId = contestant.seasons ? contestant.seasons[contestant.seasons.length - 1].seasonId : 0;
+    var photoFileName = "/imgs/contestants/" + lastSeasonId + "/" + contestant._id + ".jpg";
 
     return (
       <div className="contestantData">
@@ -70,7 +89,7 @@ function ContestantData(props) {
               <Grid container spacing={4}>
                 <Grid item xs={12} md={5} lg={3}>
                   <div className="castPhoto">
-                    <img className="img-fluid" src={"/imgs/casting/" + contestant._id + ".jpeg"} alt="cast"/>
+                    <img className="img-fluid" src={photoFileName} alt="cast"/>
                   </div>
                 </Grid>
                 <Grid item xs={12} md={7} lg={7}>
@@ -109,6 +128,21 @@ function ContestantData(props) {
                       }
                     />
 
+                    <BioRow
+                      label="Nickname"
+                      isEditMode={isEditMode}
+                      viewContent={contestant.nickname || ""}
+                      editContent={
+                        <TextField
+                          variant="outlined"
+                          label="Nickname"
+                          name="nickName"
+                          value={contestant.nickname || ""}
+                          onChange={onFieldChange}
+                        />
+                      }
+                    />
+
                     <Birthdate
                       isEditMode={isEditMode}
                       birthdate={contestant.birthdate}
@@ -133,12 +167,43 @@ function ContestantData(props) {
                       setContestant={setContestant}
                     />
 
+                    <SexualOrientation
+                      isEditMode={isEditMode}
+                      sexualOrientation={contestant.sexualOrientation || []}
+                      setContestant={setContestant}
+                    />
+
                   </form>
                 </Grid>
               </Grid>
 
 
-              {/*  <BioRow label="Last Name">
+              <Grid>
+                {(contestant && contestant.seasons) ?
+                  contestant.seasons.map(
+                    (season, index) =>
+                      <ContestantSeasonData
+                        isEditMode={isEditMode}
+                        contestant_id={contestant._id}
+                        season={season}
+                        key={index}
+                        index={index}
+                        setSeason={setSeason}
+                      />
+                  )
+                  : "no seasons"}
+              </Grid>
+
+
+
+              {/*
+
+                {contestants.map(contestant => { return (<ContestantSummary key={contestant._id} contestant={contestant}/>)})}
+contestant.seasons.map(season => {<ContestantSeasonData season={season}/>}
+
+
+
+                <BioRow label="Last Name">
                   {contestant.lastName}
                 </BioRow>
 

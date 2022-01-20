@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 
 function ContestantSummary(props) {
+  const photoFileName = "/imgs/contestants/" + props.seasonId + "/" + props.contestant._id + ".jpg";
+
   return (
     <div className="contestantSummary">
-        <img className="img-fluid" src={"/imgs/casting/" + props.contestant._id + ".jpeg"} alt="cast"/>
-        <a href={"/contestants/data/" + props.contestant._id}>{props.contestant.firstName} {props.contestant.lastName}</a>
+      <a href={"/contestants/data/" + props.contestant._id}>
+        <div className="contestantPhoto">
+          <img className="img-fluid" src={photoFileName} alt="cast"/>
+        </div>
+        {props.contestant.firstName} {props.contestant.lastName}
+      </a>
     </div>
   );
 };
