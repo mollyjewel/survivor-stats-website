@@ -12,13 +12,13 @@ function RelationshipStatus(props) {
   function onStatusChange(event) {
     const { name, value } = event.target;
     let season = {...props.season};
-    season.castingSheet.relationshipStatus = value;
+    season.relationshipStatus = value;
     props.setSeason(season, props.index);
   }
 
   const relationshipStatus =
-    (props.season.castingSheet && props.season.castingSheet.relationshipStatus) ?
-      props.season.castingSheet.relationshipStatus : "";
+    (props.season.relationshipStatus) ?
+      props.season.relationshipStatus : "";
 
       return (
         <BioRow

@@ -3,6 +3,8 @@ import Residence from './contestantSeasonData/Residence'
 import RelationshipStatus from './contestantSeasonData/RelationshipStatus'
 import Children from './contestantSeasonData/Children'
 import Occupations from './contestantSeasonData/Occupations'
+import Hobbies from './contestantSeasonData/Hobbies'
+import SelfDescriptions from './contestantSeasonData/SelfDescriptions'
 
 function ContestantSeasonData(props) {
 
@@ -13,6 +15,8 @@ function ContestantSeasonData(props) {
       <Children season={props.season} index={props.index} setSeason={props.setSeason} isEditMode={props.isEditMode}/>
       <Residence season={props.season} index={props.index} setSeason={props.setSeason} isEditMode={props.isEditMode}/>
       <Occupations season={props.season} index={props.index} setSeason={props.setSeason} isEditMode={props.isEditMode}/>
+      <Hobbies season={props.season} index={props.index} setSeason={props.setSeason} isEditMode={props.isEditMode}/>
+      <SelfDescriptions season={props.season} index={props.index} setSeason={props.setSeason} isEditMode={props.isEditMode}/>
     </div>
   )
 }

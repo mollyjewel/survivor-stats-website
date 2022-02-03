@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import SeasonDataService from "../services/season.service";
+import SeasonData from './SeasonData';
+import ContestantData from './ContestantData';
 import { Link } from "react-router-dom";
 
 export default class SeasonsList extends Component {
@@ -9,12 +11,12 @@ export default class SeasonsList extends Component {
     this.retrieveSeasons = this.retrieveSeasons.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveSeason = this.setActiveSeason.bind(this);
-    this.removeAllSeasons = this.removeAllSeasons.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
 
     this.state = {
       seasons: [],
       currentSeason: null,
+      contestantId: "61e08308d26d9b1673bb72cd",
       currentIndex: -1,
       searchTitle: ""
     };
@@ -60,16 +62,6 @@ export default class SeasonsList extends Component {
     });
   }
 
-  removeAllSeasons() {
-    SeasonDataService.deleteAll()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
 
   searchTitle() {
     SeasonDataService.findByTitle(this.state.searchTitle)
@@ -85,11 +77,11 @@ export default class SeasonsList extends Component {
   }
 
   render() {
-    const { searchTitle, seasons, currentSeason, currentIndex } = this.state;
+    const { searchTitle, seasons, currentSeason, contestantId, currentIndex } = this.state;
 
       return (
         <div className="list row">
-          <div className="col-md-8">
+          {/*<div className="col-md-8">
             <div className="input-group mb-3">
               <input
                 type="text"
@@ -108,8 +100,8 @@ export default class SeasonsList extends Component {
                 </button>
               </div>
             </div>
-          </div>
-          <div className="col-md-6">
+          </div>*/}
+          <div className="col-md-3">
             <h4>Seasons List</h4>
 
             <ul className="list-group">
@@ -128,47 +120,10 @@ export default class SeasonsList extends Component {
                 ))}
             </ul>
 
-            <button
-              className="m-3 btn btn-sm btn-danger"
-              onClick={this.removeAllSeasons}
-            >
-              Remove All
-            </button>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-5">
             {currentSeason ? (
-              <div>
-                <h4>Season</h4>
-                <div>
-                  <img src={"/imgs/season_logo/" + currentSeason._id + ".png"} alt="season logo" height="100"/>
-                </div>
-                <div>
-                  <label>
-                    <strong>Number:</strong>
-                  </label>{" "}
-                  {currentSeason._id}
-                </div>
-                <div>
-                  <label>
-                    <strong>Title:</strong>
-                  </label>{" "}
-                  {currentSeason.title}
-                </div>
-                <div>
-                  <label>
-                    <strong>Subtitle:</strong>
-                  </label>{" "}
-                  {currentSeason.subtitle}
-                </div>
-                {/*{contestants.map(contestant => <ContestantSummary contestant={contestant}>)};*/}
-
-                <Link
-                  to={"/seasons/data/" + currentSeason._id}
-                  className="badge badge-warning"
-                >
-                  Edit
-                </Link>
-              </div>
+                <SeasonData seasonId={currentSeason._id}/>
             ) : (
               <div>
                 <br />
@@ -176,7 +131,25 @@ export default class SeasonsList extends Component {
               </div>
             )}
           </div>
+          <div className="col-md-4">
+            {true ? (
+                <ContestantData contestantId={contestantId}/>
+            ) : (
+              <div>
+                <br />
+                <p>Please click on a Contestant...</p>
+              </div>
+            )}
+          </div>
         </div>
       );
     }
   }
+
+
+
+  /*<div>
+    <h4>
+    <img src={"/imgs/season_logo/" + currentSeason._id + ".png"} alt="season logo" height="100"/>
+     &nbsp;Season {currentSeason._id} {currentSeason.title} {currentSeason.subtitle}</h4>
+  </div>*/

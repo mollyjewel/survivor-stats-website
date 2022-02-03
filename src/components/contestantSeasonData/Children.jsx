@@ -11,14 +11,14 @@ function Children(props) {
   function onStatusChange(event) {
     const { name, value } = event.target;
     let season = {...props.season};
-    season.castingSheet.children = value;
+    season.children = value;
     props.setSeason(season, props.index);
   }
 
 
   const children =
-    (props.season.castingSheet && (props.season.castingSheet.children !=null)) ?
-      props.season.castingSheet.children : "";
+    (props.season.children !=null) ?
+      props.season.children : "";
 
   const options = [...Array(15).keys()];
 

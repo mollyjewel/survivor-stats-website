@@ -25,11 +25,11 @@ function ContestantData(props) {
     const [contestant, setContestant] = useState({});
     const [isEditMode, setEditMode] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const contestantId = props.contestantId ? props.contestantId : props.match.params.id;
 
     async function retrieveContestant() {
-      console.log(props.match.params.id);
       try {
-        const response = await ContestantDataService.get(props.match.params.id);
+        const response = await ContestantDataService.get(contestantId);
         // const users = await axios.get("https://randomuser.me/api/?page=1&results=10&nat=us");
         setContestant(response.data);
       } catch (error) {
@@ -74,7 +74,7 @@ function ContestantData(props) {
       });
     }
 
-    React.useEffect(() => {retrieveContestant()}, [props.match.params.id]);
+    React.useEffect(() => {retrieveContestant()}, [contestantId]);
 
     var lastSeasonId = contestant.seasons ? contestant.seasons[contestant.seasons.length - 1].seasonId : 0;
     var photoFileName = "/imgs/contestants/" + lastSeasonId + "/" + contestant._id + ".jpg";
@@ -136,7 +136,7 @@ function ContestantData(props) {
                         <TextField
                           variant="outlined"
                           label="Nickname"
-                          name="nickName"
+                          name="nickname"
                           value={contestant.nickname || ""}
                           onChange={onFieldChange}
                         />

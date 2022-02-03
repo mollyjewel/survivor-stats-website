@@ -5,16 +5,18 @@ import {getHierarchy,getText} from "../../helpers/location.js";
 
 function Residence(props) {
 
+  const residence =
+    (props.season.residence) ?
+      props.season.residence : {};
+
+
   function onLocationChange(event) {
     const { name, value } = event.target;
     let season = {...props.season};
-    season.castingSheet.residence[name] = value;
+    residence[name] = value;
+    season.residence = residence;
     props.setSeason(season, props.index);
   }
-
-  const residence =
-    (props.season.castingSheet && props.season.castingSheet.residence) ?
-      props.season.castingSheet.residence : {};
 
   return (
     <BioRow

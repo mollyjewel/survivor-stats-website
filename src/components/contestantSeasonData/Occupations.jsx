@@ -7,13 +7,13 @@ function Occupations(props) {
   function onOccupationsChange(event) {
     const { name, value } = event.target;
     let season = {...props.season};
-    season.castingSheet.occupations = value.split(", ").map(title => ({title}));
+    season.occupations = value.split(", ").map(title => ({title}));
     props.setSeason(season, props.index);
   }
 
   const occupations =
-    (props.season.castingSheet && (props.season.castingSheet.occupations !=null)) ?
-      props.season.castingSheet.occupations.map(x => x.title).join(", "): "";
+    (props.season.occupations !=null) ?
+      props.season.occupations.map(x => x.title).join(", "): "";
 
       return (
         <BioRow

@@ -3,7 +3,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 //import NavBarBoot from './NavBarBoot';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
+import Container from '@mui/material/Container';
+//import Container from 'react-bootstrap/Container';
 import Home from './pages/Home';
 import Seasons from './pages/Seasons';
 import SeasonData from './components/SeasonData';
@@ -19,7 +20,7 @@ function App() {
   return (
     <StyledEngineProvider injectFirst>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-    <Container>
+    <Container maxWidth="xl">
       <Router>
         <NavBarBoot/>
         <Switch>
