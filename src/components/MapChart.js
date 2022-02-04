@@ -1,3 +1,4 @@
+//Doc for map used: 'https://www.react-simple-maps.io/docs/getting-started/'
 import React, { useState } from 'react';
 import {
   ComposableMap,
@@ -8,6 +9,7 @@ import {
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import ContestantDataService from "../services/contestant.service";
+import LocationMarker from './LocationMarker';
 
 const geoUrl =
   "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
@@ -42,11 +44,15 @@ function MapChart(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openedPopoverId, setOpenedPopoverId] = useState(null);
 
-  function handlePopoverOpen(event, popoverId) {
+  function handlePopoverOpen(index) {
     //const { name, value } = event.target;
-    setAnchorEl(event.target);
-    setOpenedPopoverId(popoverId);
+    //setAnchorEl({ name, value });
+    console.log("index is");
+    setOpenedPopoverId(index);
     console.log("popover opened");
+    console.log("index is");
+    console.log(index);
+    //console.log(event.target);
   };
 
   function handlePopoverClose() {
@@ -117,9 +123,12 @@ function MapChart(props) {
         </Geographies>
 
         {[...locations].map(([key, value], index) => (
-          <Marker key={index} coordinates={[key.long, key.lat]}>
-            <circle r={10} fill="#F00" stroke="#fff" strokeWidth={2} />
-          </Marker>
+          <LocationMarker
+            key={index}
+            index={index}
+            coord={key}
+            contestants={value}
+          />
         ))}
 
         {markers.map(({ name, coordinates, markerOffset }) => (
@@ -139,6 +148,25 @@ function MapChart(props) {
 
 
   /*return (
+
+  <Marker
+    key={index}
+    index={index}
+    coordinates={[key.long, key.lat]}
+    onMouseEnter={handlePopoverOpen}
+    onMouseLeave={handlePopoverClose}>
+      <circle r={10} fill="#F00" stroke="#fff" strokeWidth={2} />
+      <text
+        textAnchor="middle"
+        style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}
+      >
+      {value.map(contestant => (contestant.firstName + " " + contestant.lastName))}
+      </text>
+  </Marker>
+
+
+
+
     <ComposableMap
       {projection="geoAzimuthalEqualArea"
       projectionConfig={{
@@ -174,7 +202,35 @@ function MapChart(props) {
         </Marker>
       ))}
     </ComposableMap>
-  );*/
+  );
+
+  <Typography
+      onMouseEnter={(e) => handlePopoverOpen(e, index)}
+      onMouseLeave={handlePopoverClose()}>
+      {console.log(value)}
+      {value.hometown.city}
+  </Typography>
+  <Popover
+      open={openedPopoverId === index}
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+    >
+      <Typography>
+          {value.map(contestant => (contestant.firstName + " " + contestant.lastName))}
+          popover content
+      </Typography>
+    </Popover>
+
+
+
+  */
 };
 
 export default MapChart;
