@@ -23,8 +23,8 @@ function SeasonsList(props) {
   }*/
 
   const [seasons, setSeasons] = useState([])
-  const [selectedSeason, setSelectedSeason] = useState(null)
-  const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [activeSeasonId, setActiveSeasonId] = useState(null)
+  //const [selectedIndex, setSelectedIndex] = useState(-1)
   const [searchTitle, setSearchTitle] = useState("")
 
   /*componentDidMount() {
@@ -49,14 +49,14 @@ function SeasonsList(props) {
 
   function refreshList() {
     retrieveSeasons();
-    setSelectedSeason(null)
-    setSelectedIndex(-1)
+    setActiveSeasonId(null)
+    //setSelectedIndex(-1)
   }
 
-  function setActiveSeason(season, index) {
+  /*function setActiveSeason(season, index) {
     setSelectedSeason(season)
     setSelectedIndex(index)
-  }
+  }*/
 
 
   function findSearchTitle() {
@@ -103,9 +103,9 @@ function SeasonsList(props) {
                   <li
                     className={
                       "list-group-item " +
-                      (index === selectedIndex ? "active" : "")
+                      (season._id === activeSeasonId ? "active" : "")
                     }
-                    onClick={() => setActiveSeason(season, index)}
+                    onClick={() => setActiveSeasonId(season._id)}
                     key={index}
                   >
                     {season._id} {season.title} {season.subtitle}
@@ -115,8 +115,8 @@ function SeasonsList(props) {
 
           </div>
           <div className="col-md-8">
-            {selectedSeason ? (
-                <SeasonData seasonId={selectedSeason._id}/>
+            {activeSeasonId ? (
+                <SeasonData seasonId={activeSeasonId}/>
             ) : (
               <div>
                 <br />
