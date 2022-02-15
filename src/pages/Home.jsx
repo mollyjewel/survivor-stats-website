@@ -1,12 +1,15 @@
 import logo from '../logo.svg';
 import '../App.css';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import MapChart from '../components/MapChart';
 
 function Home() {
   return (
     <div className="App">
-      <MapChart/>
+      <Container maxWidth="md">
+        <MapChart/>
+      </Container>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

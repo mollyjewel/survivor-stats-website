@@ -8,7 +8,7 @@ function NavBarBoot() {
   return (
     <Navbar bg="light" expand="lg"  fixed="top">
       <Container>
-        <Navbar.Brand href="#home"><img
+        <Navbar.Brand href="/"><img
           alt="torch logo"
           src="/imgs/logo.svg"
           width="50"

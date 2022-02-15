@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import SeasonDataService from "../services/season.service";
 import SeasonData from './SeasonData';
 import ContestantData from './ContestantData';
 import { Link } from "react-router-dom";
 
-export default class SeasonsList extends Component {
-  constructor(props) {
+function SeasonsList(props) {
+  /*constructor(props) {
     super(props);
     this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
     this.retrieveSeasons = this.retrieveSeasons.bind(this);
@@ -15,31 +15,31 @@ export default class SeasonsList extends Component {
 
     this.state = {
       seasons: [],
-      currentSeason: null,
+      selectedSeason: null,
       contestantId: "61e08308d26d9b1673bb72cd",
-      currentIndex: -1,
+      selectedIndex: -1,
       searchTitle: ""
     };
-  }
+  }*/
 
-  componentDidMount() {
+  const [seasons, setSeasons] = useState([])
+  const [selectedSeason, setSelectedSeason] = useState(null)
+  const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [searchTitle, setSearchTitle] = useState("")
+
+  /*componentDidMount() {
     this.retrieveSeasons();
+  }*/
+
+  function onChangeSearchTitle(e) {
+    const newSearchTitle = e.target.value
+    setSearchTitle(newSearchTitle)
   }
 
-  onChangeSearchTitle(e) {
-    const searchTitle = e.target.value;
-
-    this.setState({
-      searchTitle: searchTitle
-    });
-  }
-
-  retrieveSeasons() {
+  function retrieveSeasons() {
     SeasonDataService.getAll()
       .then(response => {
-        this.setState({
-          seasons: response.data
-        });
+        setSeasons(response.data)
         console.log(response.data);
       })
       .catch(e => {
@@ -47,28 +47,22 @@ export default class SeasonsList extends Component {
       });
   }
 
-  refreshList() {
-    this.retrieveSeasons();
-    this.setState({
-      currentSeason: null,
-      currentIndex: -1
-    });
+  function refreshList() {
+    retrieveSeasons();
+    setSelectedSeason(null)
+    setSelectedIndex(-1)
   }
 
-  setActiveSeason(season, index) {
-    this.setState({
-      currentSeason: season,
-      currentIndex: index
-    });
+  function setActiveSeason(season, index) {
+    setSelectedSeason(season)
+    setSelectedIndex(index)
   }
 
 
-  searchTitle() {
-    SeasonDataService.findByTitle(this.state.searchTitle)
+  function findSearchTitle() {
+    SeasonDataService.findByTitle(searchTitle)
       .then(response => {
-        this.setState({
-          seasons: response.data
-        });
+        setSeasons(response.data)
         console.log(response.data);
       })
       .catch(e => {
@@ -76,10 +70,9 @@ export default class SeasonsList extends Component {
       });
   }
 
-  render() {
-    const { searchTitle, seasons, currentSeason, contestantId, currentIndex } = this.state;
+  useEffect(() => {retrieveSeasons()}, []);
 
-      return (
+  return (
         <div className="list row">
           {/*<div className="col-md-8">
             <div className="input-group mb-3">
@@ -94,14 +87,14 @@ export default class SeasonsList extends Component {
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
-                  onClick={this.searchTitle}
+                  onClick={this.findSearchTitle}
                 >
                   Search
                 </button>
               </div>
             </div>
           </div>*/}
-          <div className="col-md-3">
+          <div className="col-md-4">
             <h4>Seasons List</h4>
 
             <ul className="list-group">
@@ -110,9 +103,9 @@ export default class SeasonsList extends Component {
                   <li
                     className={
                       "list-group-item " +
-                      (index === currentIndex ? "active" : "")
+                      (index === selectedIndex ? "active" : "")
                     }
-                    onClick={() => this.setActiveSeason(season, index)}
+                    onClick={() => setActiveSeason(season, index)}
                     key={index}
                   >
                     {season._id} {season.title} {season.subtitle}
@@ -121,9 +114,9 @@ export default class SeasonsList extends Component {
             </ul>
 
           </div>
-          <div className="col-md-5">
-            {currentSeason ? (
-                <SeasonData seasonId={currentSeason._id}/>
+          <div className="col-md-8">
+            {selectedSeason ? (
+                <SeasonData seasonId={selectedSeason._id}/>
             ) : (
               <div>
                 <br />
@@ -131,25 +124,16 @@ export default class SeasonsList extends Component {
               </div>
             )}
           </div>
-          <div className="col-md-4">
-            {true ? (
-                <ContestantData contestantId={contestantId}/>
-            ) : (
-              <div>
-                <br />
-                <p>Please click on a Contestant...</p>
-              </div>
-            )}
-          </div>
         </div>
-      );
-    }
+    )
   }
+
+  export default SeasonsList
 
 
 
   /*<div>
     <h4>
-    <img src={"/imgs/season_logo/" + currentSeason._id + ".png"} alt="season logo" height="100"/>
-     &nbsp;Season {currentSeason._id} {currentSeason.title} {currentSeason.subtitle}</h4>
+    <img src={"/imgs/season_logo/" + selectedSeason._id + ".png"} alt="season logo" height="100"/>
+     &nbsp;Season {selectedSeason._id} {selectedSeason.title} {selectedSeason.subtitle}</h4>
   </div>*/

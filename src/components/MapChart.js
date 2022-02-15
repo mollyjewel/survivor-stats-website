@@ -10,12 +10,14 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import ContestantDataService from "../services/contestant.service";
 import LocationMarker from './LocationMarker';
+import ErrorBoundary from './ErrorBoundary';
+import {getText} from "../helpers/location.js";
 
 const geoUrl =
   "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
 const location = "hometown";
-const seasonId = 41;
+
 
 const markers = [
   /*{
@@ -40,28 +42,22 @@ const markers = [
 ];
 
 function MapChart(props) {
-  const [locations, setLocations] = useState(new Map());
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [openedPopoverId, setOpenedPopoverId] = useState(null);
+  const minLng = -128 //-133 //done //-140 bad //-130 good //-125 good //-150 bad //-200
+  const maxLng = -61 //done //-60 bad //-65 good//-75 good //-50 bad //0 bad
+  const minLat = 25 //done //20 bad //15 bad //25 good //0 bad
+  const maxLat = 52 //done //55 bad //50 good //60 bad //70 bad //80 bad //100 bad
 
-  function handlePopoverOpen(index) {
-    //const { name, value } = event.target;
-    //setAnchorEl({ name, value });
-    console.log("index is");
-    setOpenedPopoverId(index);
-    console.log("popover opened");
-    console.log("index is");
-    console.log(index);
-    //console.log(event.target);
-  };
 
-  function handlePopoverClose() {
-    setAnchorEl(null);
-    setOpenedPopoverId(null);
-    console.log("closed");
-  };
+  const [locations, setLocations] = useState(null);
+  const [coords, setCoords] = useState([[minLng, 42.7477457],[maxLng, 42.7477457],[-105.009694, minLat],[-105.009694, maxLat], [-155.5828, 19.8968]])
+  const seasonId = 41;
 
-  //const open = Boolean(anchorEl);
+  const fakeLocations = [
+    [
+      {lat: 42.7477457, lng: -105.009694},
+      [{_id: '61f3802cf007c4b78ea809ab', firstName: 'Brad', lastName: 'Reese', seasons: [41], hometown:{city: "Shawnee", coordinates: {lat: 42.7477457, lng: -105.009694}, country: "USA", state: "Wyoming"}}]
+    ]
+  ]
 
   React.useEffect(() => {retrieveLocations()}, [seasonId]);
 
@@ -74,15 +70,7 @@ function MapChart(props) {
       console.log("Getting locations");
       const contestants = await ContestantDataService.getBySeasonId(seasonId);
       const newLocations = new Map();
-      /*newLocations.set(
-        {
-            "lat": 47.8209,
-            "long": -122.3151
-        },
-        {
-            "firstName": "Ricard",
-            "lastName": "Foyé",
-        });*/
+
       console.log(contestants.data);
       contestants.data.map(contestant => {
         if (contestant.hometown && contestant.hometown.coordinates) {
@@ -91,17 +79,36 @@ function MapChart(props) {
             let locationContestants = newLocations.get(contestant.hometown.coordinates);
             locationContestants.push(contestant);
             newLocations.set(contestant.hometown.coordinates, locationContestants);
+            //setCord([contestant.hometown.coordinates.lng, contestant.hometown.coordinates.lat])
           } else {
             newLocations.set(contestant.hometown.coordinates, [contestant]);
+            //setCord([contestant.hometown.coordinates.lng, contestant.hometown.coordinates.lat])
+            //setCoords(prevCoords => {
+            //  return [
+            //    ...prevCoords,
+            //    [contestant.hometown.coordinates.lng, contestant.hometown.coordinates.lat]
+            //  ]
+            //});
           }
         }
       });
-      console.log(newLocations);
-      setLocations(newLocations);
+      console.log(Array.from(newLocations));
+      console.log(fakeLocations)
+      setLocations(Array.from(newLocations));
+      //setCord([-81.65565099999999, 30.3321838])
+      console.log(coords)
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (!locations) {
+    return <div />
+  }
+
+  const isIterable = (value) => {
+    return Symbol.iterator in Object(value);
+  }
 
   return (
     <ComposableMap
@@ -122,27 +129,48 @@ function MapChart(props) {
           }
         </Geographies>
 
-        {[...locations].map(([key, value], index) => (
+        {/*locations.map(([key, value], index) => (
           <LocationMarker
             key={index}
             index={index}
-            coord={key}
+            coord={[-81.65565099999999, 30.3321838]}
+            locationTxt={getText(value[0].hometown)}
             contestants={value}
           />
+        ))*/}
+
+        {/*coords.map((coord, index) => (
+          <LocationMarkerClass
+            key={index}
+            index={index}
+            coord={coord}
+            locationTxt=""
+            contestants={[]}
+          />
+        ))*/}
+
+        {locations.map(([key, value], index) => (
+          <ErrorBoundary key={index}>
+          <LocationMarker
+            key={index}
+            index={index}
+            coord={[key.lng, key.lat]}
+            locationTxt={getText(value[0].hometown)}
+            contestants={value}
+          />
+          </ErrorBoundary>
         ))}
 
-        {markers.map(({ name, coordinates, markerOffset }) => (
-          <Marker key={name} coordinates={coordinates}>
-            <circle r={10} fill="#F00" stroke="#fff" strokeWidth={2} />
-            <text
-              textAnchor="middle"
-              y={markerOffset}
-              style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}
-            >
-              {name}
-            </text>
-          </Marker>
-        ))}
+        {/*fakeLocations.map(([key, value], index) => (
+          <LocationMarker
+            key={index}
+            index={index}
+            coord={[key.lng, key.lat]}
+            locationTxt={getText(value[0].hometown)}
+            contestants={value}
+          />
+      ))*/}
+
     </ComposableMap>
   );
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Marker} from "react-simple-maps";
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
+import {getText} from "../helpers/location.js";
 
 function LocationMarker(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,14 +22,19 @@ function LocationMarker(props) {
   return (
     <Marker
       key={props.index}
-      index={props.index}
-      coordinates={[props.coord.long, props.coord.lat]}>
+      coordinates={props.coord}>
+      <defs>
+        <radialGradient id="gradient1" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+          <stop offset="0%" stopColor="#ff4b4c" />
+          <stop offset="100%" stopColor="#b81516" />
+        </radialGradient>
+      </defs>
         <circle
           aria-owns={open ? 'mouse-over-popover' : undefined}
           aria-haspopup="true"
           onMouseOver={handlePopoverOpen}
           onMouseOut={handlePopoverClose}
-          r={10} fill="#F00" stroke="#fff" strokeWidth={2}
+          r={6} fill="url(#gradient1)" stroke="#fff" strokeWidth={.6} fillOpacity=".8"
         />
         <Popover
           id="mouse-over-popover"
@@ -38,14 +44,15 @@ function LocationMarker(props) {
           open={open}
           anchorEl={anchorEl}
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
+            vertical: 'top',
+            horizontal: 'right',
           }}
           transformOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
+            vertical: 'top',
+            horizontal: 'left',
           }}>
-            <Typography>
+            <Typography sx={{ p: 1 }}>
+                <h6>{(props.locationTxt)}</h6>
                 {props.contestants.map(contestant => (contestant.firstName + " " + contestant.lastName))}
             </Typography>
         </Popover>

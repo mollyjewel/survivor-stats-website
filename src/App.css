@@ -48,6 +48,12 @@ body {
   margin-bottom: 30px;
 }
 
+/* Don't show error overlay box in dev mode */
+iframe
+{
+    display: none;
+}
+
 #bio-data {
   min-width: 300px;
   font-size: 18px;
