@@ -4,6 +4,12 @@ import SeasonData from './SeasonData';
 import ContestantData from './ContestantData';
 import { Link } from "react-router-dom";
 
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import Typography from '@mui/material/Typography';
+
 function SeasonsList(props) {
   /*constructor(props) {
     super(props);
@@ -23,7 +29,7 @@ function SeasonsList(props) {
   }*/
 
   const [seasons, setSeasons] = useState([])
-  const [activeSeasonId, setActiveSeasonId] = useState(null)
+  const [activeSeasonId, setActiveSeasonId] = useState(1)
   //const [selectedIndex, setSelectedIndex] = useState(-1)
   const [searchTitle, setSearchTitle] = useState("")
 
@@ -49,7 +55,7 @@ function SeasonsList(props) {
 
   function refreshList() {
     retrieveSeasons();
-    setActiveSeasonId(null)
+    setActiveSeasonId(1)
     //setSelectedIndex(-1)
   }
 
@@ -95,24 +101,32 @@ function SeasonsList(props) {
             </div>
           </div>*/}
           <div className="col-md-4">
-            <h4>Seasons List</h4>
-
-            <ul className="list-group">
-              {seasons &&
-                seasons.map((season, index) => (
-                  <li
-                    className={
-                      "list-group-item " +
-                      (season._id === activeSeasonId ? "active" : "")
-                    }
-                    onClick={() => setActiveSeasonId(season._id)}
-                    key={index}
-                  >
-                    {season._id} {season.title} {season.subtitle}
-                  </li>
-                ))}
-            </ul>
-
+            <List
+              sx={{
+                width: '100%',
+                maxWidth: 360,
+                overflow: 'auto',
+                maxHeight: 750,
+                '& ul': { padding: 0 },
+              }}
+              subheader={
+                <ListSubheader>
+                    Select Season
+                </ListSubheader>}
+            >
+            {seasons && seasons.map((season, index) => (
+                      <ListItemButton
+                        selected={season._id === activeSeasonId}
+                        onClick={() => setActiveSeasonId(season._id)}
+                      >
+                        <ListItemText primary={
+                          season._id +
+                          (season.title ? (' ' + season.title) : '') +
+                          (season.subtitle ? (' ' + season.subtitle) : '')
+                        }/>
+                      </ListItemButton>
+              ))}
+            </List>
           </div>
           <div className="col-md-8">
             {activeSeasonId ? (

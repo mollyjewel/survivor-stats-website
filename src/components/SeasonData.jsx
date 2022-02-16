@@ -3,6 +3,7 @@ import SeasonDataService from "../services/season.service";
 import ContestantDataService from "../services/contestant.service";
 import ContestantSummary from "./ContestantSummary";
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 function SeasonData(props) {
 
@@ -36,10 +37,17 @@ function SeasonData(props) {
   return (
     <div>
       <div className="pageHeader">
-        <h2>
+        {/*}<h2>
           {season.title}{season.subtitle ? ": " + season.subtitle : null}
         </h2>
         <h4>Season {season._id}</h4>
+        */}
+        <Typography variant="h4">
+          Season {season._id}
+        </Typography>
+        <Typography variant="h7">
+          {season.title} {season.subtitle}
+        </Typography>
       </div>
       <Grid container spacing={4}>
         {contestants.map(contestant => {
