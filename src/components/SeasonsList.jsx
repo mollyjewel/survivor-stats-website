@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SeasonDataService from "../services/season.service";
 import SeasonData from './SeasonData';
 import ContestantData from './ContestantData';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory} from "react-router-dom";
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,31 +11,13 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Typography from '@mui/material/Typography';
 
 function SeasonsList(props) {
-  /*constructor(props) {
-    super(props);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.retrieveSeasons = this.retrieveSeasons.bind(this);
-    this.refreshList = this.refreshList.bind(this);
-    this.setActiveSeason = this.setActiveSeason.bind(this);
-    this.searchTitle = this.searchTitle.bind(this);
 
-    this.state = {
-      seasons: [],
-      selectedSeason: null,
-      contestantId: "61e08308d26d9b1673bb72cd",
-      selectedIndex: -1,
-      searchTitle: ""
-    };
-  }*/
+  const search = useLocation().search
+  const history = useHistory();
 
   const [seasons, setSeasons] = useState([])
-  const [activeSeasonId, setActiveSeasonId] = useState(1)
-  //const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [activeSeasonId, setActiveSeasonId] = useState(new URLSearchParams(search).get('id'))
   const [searchTitle, setSearchTitle] = useState("")
-
-  /*componentDidMount() {
-    this.retrieveSeasons();
-  }*/
 
   function onChangeSearchTitle(e) {
     const newSearchTitle = e.target.value
@@ -55,15 +37,8 @@ function SeasonsList(props) {
 
   function refreshList() {
     retrieveSeasons();
-    setActiveSeasonId(1)
-    //setSelectedIndex(-1)
+    setActiveSeasonId(null)
   }
-
-  /*function setActiveSeason(season, index) {
-    setSelectedSeason(season)
-    setSelectedIndex(index)
-  }*/
-
 
   function findSearchTitle() {
     SeasonDataService.findByTitle(searchTitle)
@@ -74,6 +49,11 @@ function SeasonsList(props) {
       .catch(e => {
         console.log(e);
       });
+  }
+
+  function handleSeasonChange(seasonId) {
+    history.replace(`seasons?id=${seasonId}`)
+    setActiveSeasonId(seasonId)
   }
 
   useEffect(() => {retrieveSeasons()}, []);
@@ -116,8 +96,9 @@ function SeasonsList(props) {
             >
             {seasons && seasons.map((season, index) => (
                       <ListItemButton
+                        key={`season-${season._id}`}
                         selected={season._id === activeSeasonId}
-                        onClick={() => setActiveSeasonId(season._id)}
+                        onClick={() => handleSeasonChange(season._id)}
                       >
                         <ListItemText primary={
                           season._id +
