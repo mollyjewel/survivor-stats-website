@@ -169,7 +169,7 @@ function ContestantData(props) {
 
                     <SexualOrientation
                       isEditMode={isEditMode}
-                      sexualOrientation={contestant.sexualOrientation || []}
+                      sexualOrientation={contestant.sexualOrientation || ''}
                       setContestant={setContestant}
                     />
 

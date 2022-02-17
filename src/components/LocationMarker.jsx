@@ -51,8 +51,10 @@ function LocationMarker(props) {
             vertical: 'top',
             horizontal: 'left',
           }}>
+            <Typography variant="h7" component="div" sx={{ p: 1 }}>
+              {(props.locationTxt)}
+            </Typography>
             <Typography sx={{ p: 1 }}>
-                <h6>{(props.locationTxt)}</h6>
                 {props.contestants.map(contestant => (contestant.firstName + " " + contestant.lastName))}
             </Typography>
         </Popover>
