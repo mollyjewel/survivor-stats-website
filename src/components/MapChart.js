@@ -8,6 +8,8 @@ import {
 } from "react-simple-maps";
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
 import ContestantDataService from "../services/contestant.service";
 import LocationMarker from './LocationMarker';
 import ErrorBoundary from './ErrorBoundary';
@@ -50,7 +52,7 @@ function MapChart(props) {
 
   const [locations, setLocations] = useState(null);
   const [coords, setCoords] = useState([[minLng, 42.7477457],[maxLng, 42.7477457],[-105.009694, minLat],[-105.009694, maxLat], [-155.5828, 19.8968]])
-  const seasonId = 41;
+  const [seasonId, setSeasonId] = useState(41);
 
   const fakeLocations = [
     [
@@ -58,6 +60,11 @@ function MapChart(props) {
       [{_id: '61f3802cf007c4b78ea809ab', firstName: 'Brad', lastName: 'Reese', seasons: [41], hometown:{city: "Shawnee", coordinates: {lat: 42.7477457, lng: -105.009694}, country: "USA", state: "Wyoming"}}]
     ]
   ]
+
+  function onSeasonChange(event, newValue) {
+    setSeasonId(newValue)
+    //console.log("season changed")
+  }
 
   React.useEffect(() => {retrieveLocations()}, [seasonId]);
 
@@ -93,24 +100,34 @@ function MapChart(props) {
         }
       });
       console.log(Array.from(newLocations));
-      console.log(fakeLocations)
       setLocations(Array.from(newLocations));
-      //setCord([-81.65565099999999, 30.3321838])
-      console.log(coords)
     } catch (error) {
       console.log(error);
     }
   };
 
+  function valuetext(value) {
+    return `${value}`;
+  }
+
   if (!locations) {
     return <div />
   }
 
-  const isIterable = (value) => {
-    return Symbol.iterator in Object(value);
-  }
-
   return (
+    <Box>
+    <Slider
+      aria-label="Season"
+      value={seasonId}
+      getAriaValueText={valuetext}
+      onChange={onSeasonChange}
+      valueLabelDisplay="auto"
+      color="secondary"
+      step={1}
+      marks
+      min={1}
+      max={41}
+    />
     <ComposableMap
       projection="geoAlbersUsa"
     >
@@ -172,7 +189,8 @@ function MapChart(props) {
       ))*/}
 
     </ComposableMap>
-  );
+    </Box>
+  )
 
 
   /*return (
