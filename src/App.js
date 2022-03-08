@@ -20,7 +20,7 @@ function App() {
   return (
     <StyledEngineProvider injectFirst>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{backgroundColor: '#bdbebf'}}>
       <Router>
         <NavBarBoot/>
         <Switch>

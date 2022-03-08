@@ -2,13 +2,17 @@ import logo from '../logo.svg';
 import '../App.css';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import MapChart from '../components/MapChart';
+import GenderBarGraph from '../components/GenderBarGraph';
+import DataVizItem from '../components/DataViz/DataVizItem';
 
 function Home() {
   return (
     <div className="App">
       <Container maxWidth="md">
         <MapChart/>
+        <DataVizItem content={<GenderBarGraph/>} />
       </Container>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
