@@ -5,6 +5,8 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import MapChart from '../components/MapChart';
 import GenderBarGraph from '../components/GenderBarGraph';
+import RaceBarGraph from '../components/RaceBarGraph';
+import SexOrientBarGraph from '../components/SexOrientBarGraph';
 import DataVizItem from '../components/DataViz/DataVizItem';
 
 function Home() {
@@ -12,7 +14,9 @@ function Home() {
     <div className="App">
       <Container maxWidth="md">
         <MapChart/>
-        <DataVizItem content={<GenderBarGraph/>} />
+        <DataVizItem title={'Gender Diversity'} content={<GenderBarGraph/>} />
+        <DataVizItem title={'Race Diversity'} content={<RaceBarGraph/>} />
+        <DataVizItem title={'Sexual Orientation Diversity'} content={<SexOrientBarGraph/>} />
       </Container>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

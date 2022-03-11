@@ -24,6 +24,14 @@ class ContestantDataService {
   getSeasonGenderPercents() {
     return http.get(`/contestants/gender/percents`)
   }
+
+  getSeasonRacePercents() {
+    return http.get(`/contestants/race/percents`)
+  }
+
+  getSeasonSexOrientPercents() {
+    return http.get(`/contestants/sexualOrientation/percents`)
+  }
 }
 
 export default new ContestantDataService();

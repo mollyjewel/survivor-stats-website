@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import ContestantDataService from "../services/contestant.service";
 import BarGraph from './DataViz/BarGraph';
-import genders from 'survivor-stats-common/models/gender';
+import raceAndEthnicityTypes from 'survivor-stats-common/models/raceAndEthnicity';
 
-function GenderBarGraph(props) {
+function RaceBarGraph(props) {
   const [data,setData] = useState([])
-  const keys = [...genders, 'unknown']
+  const keys = [...raceAndEthnicityTypes, 'unknown']
 
   async function getData() {
     try {
-      let newData = (await ContestantDataService.getSeasonGenderPercents()).data
+      let newData = (await ContestantDataService.getSeasonRacePercents()).data
       setData(newData)
     } catch (e) {
       console.error(e)
@@ -29,4 +29,4 @@ function GenderBarGraph(props) {
   )
 }
 
-export default GenderBarGraph
+export default RaceBarGraph
