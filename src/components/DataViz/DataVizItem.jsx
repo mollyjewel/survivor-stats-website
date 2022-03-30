@@ -6,12 +6,11 @@ import Divider from '@mui/material/Divider';
 function DataVizItem(props) {
 
   return (
-      <Box sx={{borderRadius: '3px', margin: '12px 0px', border: '1px solid #c7c8c9'}}>
-        <Typography variant="h4" component="div" sx={{padding: '20px'}}>
+      <Box sx={{borderRadius: '3px', backgroundColor: 'white', padding:'8px'/*border: '1px solid #c7c8c9'*/}}>
+        <Typography variant="h4" color='#686869' textAlign='center' component="div" sx={{/*padding: '12px'*/}}>
           {props.title}
         </Typography>
-        <Divider/>
-        <Box sx={{padding: '10px'}}>
+        <Box sx={{/*padding: '10px'*/}}>
           {props.content}
         </Box>
       </Box>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SeasonDataService from "../services/season.service";
 import SeasonData from './SeasonData';
-import ContestantData from './ContestantData';
 import { Link, useLocation, useHistory} from "react-router-dom";
 
 import List from '@mui/material/List';
@@ -9,6 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
 function SeasonsList(props) {
 
@@ -59,28 +59,8 @@ function SeasonsList(props) {
   useEffect(() => {retrieveSeasons()}, []);
 
   return (
-        <div className="list row">
-          {/*<div className="col-md-8">
-            <div className="input-group mb-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search by title"
-                value={searchTitle}
-                onChange={this.onChangeSearchTitle}
-              />
-              <div className="input-group-append">
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={this.findSearchTitle}
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>*/}
-          <div className="col-md-4">
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
             <List
               sx={{
                 width: '100%',
@@ -108,8 +88,8 @@ function SeasonsList(props) {
                       </ListItemButton>
               ))}
             </List>
-          </div>
-          <div className="col-md-8">
+          </Grid>
+          <Grid item xs={9}>
             {activeSeasonId ? (
                 <SeasonData seasonId={activeSeasonId}/>
             ) : (
@@ -118,8 +98,8 @@ function SeasonsList(props) {
                 <p>Please click on a Season...</p>
               </div>
             )}
-          </div>
-        </div>
+          </Grid>
+        </Grid>
     )
   }
 

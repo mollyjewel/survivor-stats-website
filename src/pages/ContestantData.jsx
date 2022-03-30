@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
-import ContestantDataService from "../services/contestant.service";
-import BioRow from "./BioRow";
-import CastingSheet from "./CastingSheet";
+import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import ContestantDataService from "../services/contestant.service";
+import BioRow from "../components/BioRow";
+import CastingSheet from "../components/CastingSheet";
 import getDateText from "../helpers/date.js";
 import getLocationText from "../helpers/location.js";
 
-import Grid from '@mui/material/Grid';
-import UploadContestantPhoto from './UploadPhotoButton';
+import UploadContestantPhoto from '../components/UploadPhotoButton';
 import { DropzoneArea } from 'material-ui-dropzone';
 
 // Contestant Data components
-import FirstName from "./contestantData/FirstName";
-import Birthdate from "./contestantData/Birthdate";
-import Hometown from "./contestantData/Hometown";
-import RaceAndEthnicity from "./contestantData/RaceAndEthnicity";
-import Gender from "./contestantData/Gender";
-import SexualOrientation from "./contestantData/SexualOrientation";
+import FirstName from "../components/contestantData/FirstName";
+import Birthdate from "../components/contestantData/Birthdate";
+import Hometown from "../components/contestantData/Hometown";
+import RaceAndEthnicity from "../components/contestantData/RaceAndEthnicity";
+import Gender from "../components/contestantData/Gender";
+import SexualOrientation from "../components/contestantData/SexualOrientation";
 
-import ContestantSeasonData from "./ContestantSeasonData";
+import ContestantSeasonData from "../components/ContestantSeasonData";
 
 function ContestantData(props) {
     const [contestant, setContestant] = useState({});
@@ -80,12 +82,10 @@ function ContestantData(props) {
     var photoFileName = "/imgs/contestants/" + lastSeasonId + "/" + contestant._id + ".jpg";
 
     return (
-      <div className="contestantData">
-        <div className="pageHeader">
-        <h2>
+      <Container maxWidth="xl" className="contestantData">
+        <Typography variant="h4" className="pageHeader">
           {contestant.firstName} {contestant.lastName}
-        </h2>
-        </div>
+        </Typography>
               <Grid container spacing={4}>
                 <Grid item xs={12} md={5} lg={3}>
                   <div className="castPhoto">
@@ -234,7 +234,7 @@ contestant.seasons.map(season => {<ContestantSeasonData season={season}/>}
         {/* <div className="castingSheets">
           {contestant.castingSheets && contestant.castingSheets.map(castingSheet => <CastingSheet {...castingSheet}/> )}
         </div>*/}
-      </div>
+      </Container>
     )
 }
 
