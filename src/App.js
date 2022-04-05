@@ -11,6 +11,7 @@ import CastDiversity from './pages/CastDiversity'
 import SeasonData from './components/SeasonData';
 import ContestantsList from './components/ContestantsList';
 import ContestantData from './pages/ContestantData';
+import SignIn from './pages/SignIn';
 //import "bootstrap/dist/css/bootstrap.min.css";
 import { StyledEngineProvider } from '@mui/material/styles';
 //import ButtonAppBar from './NavBar';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/seasons/data/:id" exact component={SeasonData} />
           <Route path="/contestants" exact component = {ContestantsList} />
           <Route path="/contestants/data/:id" exact component = {ContestantData} />
+          <Route path="/signin" exact component = {SignIn} />
         </Switch>
       </Router>
     </LocalizationProvider>

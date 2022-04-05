@@ -11,7 +11,7 @@ import DataVizItem from '../components/DataViz/DataVizItem';
 
 function CastDiversity() {
   return (
-    <Container maxWidth="xxl" sx={{backgroundColor: '#acb4bd'}}>
+    <Container maxWidth="xxl" className={"chartPageContainer"} sx={{backgroundColor: '#acb4bd'}}>
       <Container maxWidth="xl">
         <Typography variant="h2" className={"chartPageHeader"}>
           How Diverse is Survivor Casting?

@@ -1,85 +1,94 @@
-import React, { useState } from 'react';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import ContestantDataService from "../services/contestant.service";
-import BioRow from "../components/BioRow";
-import CastingSheet from "../components/CastingSheet";
-import getDateText from "../helpers/date.js";
-import getLocationText from "../helpers/location.js";
+import React, { useState } from 'react'
+import Cookie from 'js-cookie'
+import Alert from '@mui/material/Alert'
+import Container from '@mui/material/Container'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import ContestantDataService from "../services/contestant.service"
+import BioRow from "../components/BioRow"
+import CastingSheet from "../components/CastingSheet"
+import getDateText from "../helpers/date.js"
+import getLocationText from "../helpers/location.js"
 
-import UploadContestantPhoto from '../components/UploadPhotoButton';
-import { DropzoneArea } from 'material-ui-dropzone';
+import UploadContestantPhoto from '../components/UploadPhotoButton'
+import { DropzoneArea } from 'material-ui-dropzone'
 
 // Contestant Data components
-import FirstName from "../components/contestantData/FirstName";
-import Birthdate from "../components/contestantData/Birthdate";
-import Hometown from "../components/contestantData/Hometown";
-import RaceAndEthnicity from "../components/contestantData/RaceAndEthnicity";
-import Gender from "../components/contestantData/Gender";
-import SexualOrientation from "../components/contestantData/SexualOrientation";
+import FirstName from "../components/contestantData/FirstName"
+import Birthdate from "../components/contestantData/Birthdate"
+import Hometown from "../components/contestantData/Hometown"
+import RaceAndEthnicity from "../components/contestantData/RaceAndEthnicity"
+import Gender from "../components/contestantData/Gender"
+import SexualOrientation from "../components/contestantData/SexualOrientation"
 
-import ContestantSeasonData from "../components/ContestantSeasonData";
+import ContestantSeasonData from "../components/ContestantSeasonData"
 
 function ContestantData(props) {
-    const [contestant, setContestant] = useState({});
-    const [isEditMode, setEditMode] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const contestantId = props.contestantId ? props.contestantId : props.match.params.id;
+    const [contestant, setContestant] = useState({})
+    const [isEditMode, setEditMode] = useState(false)
+    const [canEdit, setCanEdit] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    const contestantId = props.contestantId ? props.contestantId : props.match.params.id
 
     async function retrieveContestant() {
-      try {
-        const response = await ContestantDataService.get(contestantId);
-        // const users = await axios.get("https://randomuser.me/api/?page=1&results=10&nat=us");
-        setContestant(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+      ContestantDataService.get(contestantId)
+        .then(response => {
+          setContestant(response.data)
+          setErrorMessage("")
+        })
+        .catch(error => {
+          console.log(error)
+          setErrorMessage("Failed to retrieve contestant data")
+        })
     }
 
     function discardEdits() {
-      setEditMode(false);
-      retrieveContestant();
+      setEditMode(false)
+      retrieveContestant()
     }
 
     function saveEdits() {
       ContestantDataService.update(contestant._id, contestant)
         .then(response => {
-          console.log(response.data);
-          setEditMode(false);
+          console.log(response.data)
+          setEditMode(false)
+          setErrorMessage("")
         })
         .catch(e => {
-          console.log(e);
-        });
+          console.log(e)
+          setEditMode(false)
+          setErrorMessage("Changes failed to save")
+        })
     }
 
     function onFieldChange(event) {
-      const { name, value } = event.target;
+      const { name, value } = event.target
       setContestant(prevContestant => {
         return {
           ...prevContestant,
           [name]: value
         }
-      });
+      })
     }
 
     function setSeason(season, index) {
-      let updatedSeasons = [...contestant.seasons];
-      updatedSeasons[index] = season;
+      let updatedSeasons = [...contestant.seasons]
+      updatedSeasons[index] = season
       setContestant(prevContestant => {
         return {
           ...prevContestant,
           seasons: updatedSeasons
         }
-      });
+      })
     }
 
-    React.useEffect(() => {retrieveContestant()}, [contestantId]);
+    React.useEffect(() => {retrieveContestant()}, [contestantId])
+    React.useEffect(() => { if (Cookie.get('canEdit')) setCanEdit(true) }, [])
 
-    var lastSeasonId = contestant.seasons ? contestant.seasons[contestant.seasons.length - 1].seasonId : 0;
-    var photoFileName = "/imgs/contestants/" + lastSeasonId + "/" + contestant._id + ".jpg";
+    var lastSeasonId = contestant.seasons ? contestant.seasons[contestant.seasons.length - 1].seasonId : 0
+    var photoFileName = "/imgs/contestants/" + lastSeasonId + "/" + contestant._id + ".jpg"
 
     return (
       <Container maxWidth="xl" className="contestantData">
@@ -93,10 +102,11 @@ function ContestantData(props) {
                   </div>
                 </Grid>
                 <Grid item xs={12} md={7} lg={7}>
+                  {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                   <form>
                     {isEditMode && <Button variant="text" onClick={saveEdits}>Save</Button>}
                     {isEditMode && <Button variant="text" onClick={discardEdits}>Discard</Button>}
-                    {!isEditMode && <Button variant="text" onClick={() => setEditMode(true)}>Edit</Button>}
+                    {!isEditMode && canEdit && <Button variant="text" onClick={() => setEditMode(true)}>Edit</Button>}
 
                     <BioRow
                       label="First Name"
@@ -239,4 +249,4 @@ contestant.seasons.map(season => {<ContestantSeasonData season={season}/>}
 }
 
 
-export default ContestantData;
+export default ContestantData
