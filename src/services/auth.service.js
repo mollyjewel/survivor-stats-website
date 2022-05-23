@@ -1,4 +1,4 @@
-import http from "../http-common";
+import http from "http-common"
 
 class AuthService {
   auth(access_token) {
@@ -6,4 +6,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+export default new AuthService()

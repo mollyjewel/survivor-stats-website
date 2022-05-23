@@ -1,8 +1,6 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid'
 
 function BioRow(props) {
-  //if (props.children == null || props.children === "") {return null}
 
   return (
       <Grid container spacing={2}>
@@ -15,23 +13,7 @@ function BioRow(props) {
           {props.isEditMode ? props.editContent : props.viewContent}
         </Grid>
       </Grid>
-  );
+  )
 }
 
-export default BioRow;
-
-
-{/*
-  return (
-    <div className="row">
-      <div className="col label-col">
-        <label className="form-label">
-          {props.label}
-        </label>
-      </div>
-      <div className="col">
-          {props.isEditMode ? props.editContent : props.viewContent}
-      </div>
-    </div>
-  );
-*/}
+export default BioRow

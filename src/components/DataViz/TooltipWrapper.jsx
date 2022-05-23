@@ -1,7 +1,6 @@
-import React from 'react'
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 
-function TooltipWrapper(props) {
+export default function TooltipWrapper(props) {
   return (
     <Box
       className={"tooltipBox"}
@@ -27,6 +26,4 @@ function TooltipWrapper(props) {
       </Box>
     </Box>
   )
-}
-
-export default TooltipWrapper
+} 

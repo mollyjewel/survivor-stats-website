@@ -1,19 +1,16 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import { Link, useLocation, useHistory} from "react-router-dom";
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import MenuItem from '@mui/material/MenuItem'
+import { Link } from "react-router-dom"
 
-import TorchIcon from './components/TorchIcon'
+import TorchIcon from 'components/TorchIcon'
 
 const pages = [
   {
@@ -22,22 +19,19 @@ const pages = [
   }
 ]
 
-const txtColor = '#616162' //'#727273' '#616162' '#484848'
-const fontWeight = 400
-
 function NavBarMUI(props) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   return (
-    <AppBar position="sticky" sx={{ boxShadow: 'none', backgroundColor: '#f8f9fa', color: txtColor }}>
+    <AppBar position="sticky" sx={{ boxShadow: 'none', backgroundColor: '#f8f9fa', color: '#616162' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -127,4 +121,4 @@ function NavBarMUI(props) {
     </AppBar>
   )
 }
-export default NavBarMUI;
+export default NavBarMUI

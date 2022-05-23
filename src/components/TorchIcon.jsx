@@ -1,5 +1,5 @@
-import * as React from 'react';
-import SvgIcon from '@mui/material/SvgIcon';
+import React from 'react'
+import SvgIcon from '@mui/material/SvgIcon'
 
 function TorchIcon(props) {
   return (

@@ -1,26 +1,23 @@
-import React from "react";
-import BioRow from "../BioRow";
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import BioRow from "components/BioRow"
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 
 function Children(props) {
 
   function onStatusChange(event) {
-    const { name, value } = event.target;
-    let season = {...props.season};
-    season.children = value;
-    props.setSeason(season, props.index);
+    let season = {...props.season}
+    season.children = event.target.value
+    props.setSeason(season, props.index)
   }
 
 
   const children =
     (props.season.children !=null) ?
-      props.season.children : "";
+      props.season.children : ""
 
-  const options = [...Array(15).keys()];
+  const options = [...Array(15).keys()]
 
       return (
         <BioRow
@@ -49,7 +46,7 @@ function Children(props) {
           </FormControl>
           }
         />
-      );
+      )
 }
 
-export default Children;
+export default Children

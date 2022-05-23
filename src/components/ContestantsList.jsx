@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import ContestantDataService from "../services/contestant.service";
-import { Link } from "react-router-dom";
+import { Component } from "react"
+import ContestantDataService from "services/contestant.service"
+import { Link } from "react-router-dom"
 
 export default class ContestantsList extends Component {
   constructor(props) {
-    super(props);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.retrieveContestants = this.retrieveContestants.bind(this);
-    this.refreshList = this.refreshList.bind(this);
-    this.setActiveContestant = this.setActiveContestant.bind(this);
-    this.removeAllContestants = this.removeAllContestants.bind(this);
-    this.searchTitle = this.searchTitle.bind(this);
+    super(props)
+    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this)
+    this.retrieveContestants = this.retrieveContestants.bind(this)
+    this.refreshList = this.refreshList.bind(this)
+    this.setActiveContestant = this.setActiveContestant.bind(this)
+    this.removeAllContestants = this.removeAllContestants.bind(this)
+    this.searchTitle = this.searchTitle.bind(this)
 
     this.state = {
       contestants: [],
       currentContestant: null,
       currentIndex: -1,
       searchTitle: ""
-    };
+    }
   }
 
   componentDidMount() {
-    this.retrieveContestants();
+    this.retrieveContestants()
   }
 
   onChangeSearchTitle(e) {
-    const searchTitle = e.target.value;
+    const searchTitle = e.target.value
 
     this.setState({
       searchTitle: searchTitle
-    });
+    })
   }
 
   retrieveContestants() {
@@ -37,38 +37,38 @@ export default class ContestantsList extends Component {
       .then(response => {
         this.setState({
           contestants: response.data
-        });
-        console.log(response.data);
+        })
+        console.log(response.data)
       })
       .catch(e => {
-        console.log(e);
-      });
+        console.log(e)
+      })
   }
 
   refreshList() {
-    this.retrieveContestants();
+    this.retrieveContestants()
     this.setState({
       currentContestant: null,
       currentIndex: -1
-    });
+    })
   }
 
   setActiveContestant(contestant, index) {
     this.setState({
       currentContestant: contestant,
       currentIndex: index
-    });
+    })
   }
 
   removeAllContestants() {
     ContestantDataService.deleteAll()
       .then(response => {
-        console.log(response.data);
-        this.refreshList();
+        console.log(response.data)
+        this.refreshList()
       })
       .catch(e => {
-        console.log(e);
-      });
+        console.log(e)
+      })
   }
 
   searchTitle() {
@@ -76,16 +76,16 @@ export default class ContestantsList extends Component {
       .then(response => {
         this.setState({
           contestants: response.data
-        });
-        console.log(response.data);
+        })
+        console.log(response.data)
       })
       .catch(e => {
-        console.log(e);
-      });
+        console.log(e)
+      })
   }
 
   render() {
-    const { searchTitle, contestants, currentContestant, currentIndex } = this.state;
+    const { searchTitle, contestants, currentContestant, currentIndex } = this.state
 
       return (
         <div className="list row">
@@ -176,6 +176,6 @@ export default class ContestantsList extends Component {
             )}
           </div>
         </div>
-      );
+      )
     }
   }

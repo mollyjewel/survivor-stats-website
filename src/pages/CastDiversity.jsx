@@ -1,13 +1,12 @@
-import React from 'react';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import MapChart from '../components/MapChart';
-import GenderBarGraph from '../components/GenderBarGraph';
-import RaceBarGraph from '../components/RaceBarGraph';
-import SexOrientBarGraph from '../components/SexOrientBarGraph';
-import DataVizItem from '../components/DataViz/DataVizItem';
+import Container from '@mui/material/Container'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import MapChart from 'components/mapChart/MapChart'
+import GenderBarGraph from 'components/barGraph/GenderBarGraph'
+import RaceBarGraph from 'components/barGraph/RaceBarGraph'
+import SexOrientBarGraph from 'components/barGraph/SexOrientBarGraph'
+import DataVizItem from 'components/DataViz/DataVizItem'
 
 function CastDiversity() {
   return (
@@ -38,4 +37,4 @@ function CastDiversity() {
   )
 }
 
-export default CastDiversity;
+export default CastDiversity

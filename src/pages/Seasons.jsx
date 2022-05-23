@@ -1,7 +1,5 @@
-import React from 'react';
-import Container from '@mui/material/Container';
-import SeasonsTable from '../components/SeasonsTable';
-import SeasonsList from '../components/SeasonsList';
+import Container from '@mui/material/Container'
+import SeasonsList from 'components/seasonData/SeasonsList'
 
 function Seasons() {
   return (
@@ -11,4 +9,4 @@ function Seasons() {
   )
 }
 
-export default Seasons;
+export default Seasons

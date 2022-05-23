@@ -1,23 +1,16 @@
-import React from 'react';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-//import NavBarBoot from './NavBarBoot';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Container from '@mui/material/Container';
-//import Container from 'react-bootstrap/Container';
-import Home from './pages/Home';
-import Seasons from './pages/Seasons';
-import CastDiversity from './pages/CastDiversity'
-import SeasonData from './components/SeasonData';
-import ContestantsList from './components/ContestantsList';
-import ContestantData from './pages/ContestantData';
-import SignIn from './pages/SignIn';
-//import "bootstrap/dist/css/bootstrap.min.css";
-import { StyledEngineProvider } from '@mui/material/styles';
-//import ButtonAppBar from './NavBar';
-import NavBarBoot from './NavBarBoot';
-import NavBarMUI from './NavBarMUI';
-import './App.css';
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Seasons from 'pages/Seasons'
+import CastDiversity from 'pages/CastDiversity'
+import SeasonData from 'components/seasonData/SeasonData'
+import ContestantsList from 'components/ContestantsList'
+import ContestantData from 'pages/ContestantData'
+import SignIn from 'pages/SignIn'
+//import "bootstrap/dist/css/bootstrap.min.css"
+import { StyledEngineProvider } from '@mui/material/styles'
+import NavBarMUI from 'components/NavBarMUI'
+import 'App.css'
 
 function App() {
   return (
@@ -37,7 +30,7 @@ function App() {
       </Router>
     </LocalizationProvider>
     </StyledEngineProvider>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,8 +1,7 @@
-import React from 'react'
-import Box from '@mui/material/Box';
-import LegendItem from './LegendItem'
+import Box from '@mui/material/Box'
+import LegendItem from 'components/DataViz/LegendItem'
 
-function Legend(props) {
+export default function Legend(props) {
 
   const categoryColors = props.categoryColors
 
@@ -13,22 +12,3 @@ function Legend(props) {
     </Box>
   )
 }
-
-export default Legend
-
-/*
-//Object.entries(props.categoryColors).forEach(entry => (<p>entry</p>)
-for (const key in props.categoryColors) {
-  return (<p>boo</p>)
-    //console.log(`${key}: ${user[key]}`);
-}
-  /*{
-  const [category, color] = entry;
-  console.log('category' + category)
-  return (
-  <div>
-    <p>boo</p>
-    <LegendItem color={color}/>
-  </div>
-  )
-}*/

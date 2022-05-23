@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Cookie from 'js-cookie'
 import Alert from '@mui/material/Alert'
 import Container from '@mui/material/Container'
@@ -6,24 +6,17 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import ContestantDataService from "../services/contestant.service"
-import BioRow from "../components/BioRow"
-import CastingSheet from "../components/CastingSheet"
-import getDateText from "../helpers/date.js"
-import getLocationText from "../helpers/location.js"
-
-import UploadContestantPhoto from '../components/UploadPhotoButton'
-import { DropzoneArea } from 'material-ui-dropzone'
+import ContestantDataService from "services/contestant.service"
+import BioRow from "components/BioRow"
 
 // Contestant Data components
-import FirstName from "../components/contestantData/FirstName"
-import Birthdate from "../components/contestantData/Birthdate"
-import Hometown from "../components/contestantData/Hometown"
-import RaceAndEthnicity from "../components/contestantData/RaceAndEthnicity"
-import Gender from "../components/contestantData/Gender"
-import SexualOrientation from "../components/contestantData/SexualOrientation"
+import Birthdate from "components/contestantData/Birthdate"
+import Hometown from "components/contestantData/Hometown"
+import RaceAndEthnicity from "components/contestantData/RaceAndEthnicity"
+import Gender from "components/contestantData/Gender"
+import SexualOrientation from "components/contestantData/SexualOrientation"
 
-import ContestantSeasonData from "../components/ContestantSeasonData"
+import ContestantSeasonData from "components/contestantSeasonData/ContestantSeasonData"
 
 function ContestantData(props) {
     const [contestant, setContestant] = useState({})
@@ -32,7 +25,7 @@ function ContestantData(props) {
     const [errorMessage, setErrorMessage] = useState("")
     const contestantId = props.contestantId ? props.contestantId : props.match.params.id
 
-    async function retrieveContestant() {
+    const retrieveContestant = useCallback(async (params) => {
       ContestantDataService.get(contestantId)
         .then(response => {
           setContestant(response.data)
@@ -42,7 +35,7 @@ function ContestantData(props) {
           console.log(error)
           setErrorMessage("Failed to retrieve contestant data")
         })
-    }
+    }, [contestantId])
 
     function discardEdits() {
       setEditMode(false)
@@ -52,7 +45,7 @@ function ContestantData(props) {
     function saveEdits() {
       ContestantDataService.update(contestant._id, contestant)
         .then(response => {
-          console.log(response.data)
+          setContestant(response.data)
           setEditMode(false)
           setErrorMessage("")
         })
@@ -84,8 +77,9 @@ function ContestantData(props) {
       })
     }
 
-    React.useEffect(() => {retrieveContestant()}, [contestantId])
-    React.useEffect(() => { if (Cookie.get('canEdit')) setCanEdit(true) }, [])
+    useEffect(() => {retrieveContestant()}, [retrieveContestant, contestantId])
+
+    useEffect(() => { if (Cookie.get('canEdit')) setCanEdit(true) }, [])
 
     var lastSeasonId = contestant.seasons ? contestant.seasons[contestant.seasons.length - 1].seasonId : 0
     var photoFileName = "/imgs/contestants/" + lastSeasonId + "/" + contestant._id + ".jpg"
@@ -203,47 +197,6 @@ function ContestantData(props) {
                   )
                   : "no seasons"}
               </Grid>
-
-
-
-              {/*
-
-                {contestants.map(contestant => { return (<ContestantSummary key={contestant._id} contestant={contestant}/>)})}
-contestant.seasons.map(season => {<ContestantSeasonData season={season}/>}
-
-
-
-                <BioRow label="Last Name">
-                  {contestant.lastName}
-                </BioRow>
-
-                <BioRow label="Nickname">
-                  {contestant.nickname}
-                </BioRow>
-
-                <BioRow label="Birthdate">
-                  {getDateText(contestant.birthdate)}
-                </BioRow>
-
-                <BioRow label="Hometown">
-                  {getLocationText(contestant.hometown)}
-                </BioRow>
-
-                <BioRow label="Race and Ethnicity">
-                  {contestant.raceAndEthnicity}
-                </BioRow>
-
-                <BioRow label="Gender">
-                  {contestant.gender}
-                </BioRow>
-
-                <BioRow label="Sexual Orientation">
-                  {contestant.sexualOrientation}
-                </BioRow> */}
-
-        {/* <div className="castingSheets">
-          {contestant.castingSheets && contestant.castingSheets.map(castingSheet => <CastingSheet {...castingSheet}/> )}
-        </div>*/}
       </Container>
     )
 }

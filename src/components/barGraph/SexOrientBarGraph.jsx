@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import ContestantDataService from "../services/contestant.service";
-import BarGraph from './DataViz/BarGraph';
-import sexualOrientations from 'survivor-stats-common/models/sexualOrientation';
+import { useState, useEffect } from 'react'
+import ContestantDataService from "services/contestant.service"
+import BarGraph from 'components/barGraph/BarGraph'
+import sexualOrientations from 'survivor-stats-common/models/sexualOrientation'
 
 function SexOrientBarGraph(props) {
   const [data,setData] = useState([])
@@ -16,7 +16,7 @@ function SexOrientBarGraph(props) {
     }
   }
 
-  React.useEffect(() => {getData()}, [])
+  useEffect(() => {getData()}, [])
 
   return (
     <BarGraph

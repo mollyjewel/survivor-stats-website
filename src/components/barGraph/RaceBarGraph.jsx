@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import ContestantDataService from "../services/contestant.service";
-import BarGraph from './DataViz/BarGraph';
-import raceAndEthnicityTypes from 'survivor-stats-common/models/raceAndEthnicity';
+import { useState, useEffect } from 'react'
+import ContestantDataService from "services/contestant.service"
+import BarGraph from 'components/barGraph/BarGraph'
+import raceAndEthnicityTypes from 'survivor-stats-common/models/raceAndEthnicity'
 
 function RaceBarGraph(props) {
   const [data,setData] = useState([])
@@ -16,7 +16,7 @@ function RaceBarGraph(props) {
     }
   }
 
-  React.useEffect(() => {getData()}, [])
+  useEffect(() => {getData()}, [])
 
   return (
     <BarGraph

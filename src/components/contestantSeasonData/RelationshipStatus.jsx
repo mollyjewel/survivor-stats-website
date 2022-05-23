@@ -1,24 +1,21 @@
-import React from "react";
-import BioRow from "../BioRow";
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import options from 'survivor-stats-common/models/relationshipStatus';
+import BioRow from "components/BioRow"
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import options from 'survivor-stats-common/models/relationshipStatus'
 
 function RelationshipStatus(props) {
 
   function onStatusChange(event) {
-    const { name, value } = event.target;
-    let season = {...props.season};
-    season.relationshipStatus = value;
-    props.setSeason(season, props.index);
+    let season = {...props.season}
+    season.relationshipStatus = event.target.value
+    props.setSeason(season, props.index)
   }
 
   const relationshipStatus =
     (props.season.relationshipStatus) ?
-      props.season.relationshipStatus : "";
+      props.season.relationshipStatus : ""
 
       return (
         <BioRow
@@ -47,7 +44,7 @@ function RelationshipStatus(props) {
           </FormControl>
           }
         />
-      );
+      )
 }
 
-export default RelationshipStatus;
+export default RelationshipStatus

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
 
 function ContestantSummary(props) {
-  const photoFileName = "/imgs/contestants/" + props.seasonId + "/" + props.contestant._id + ".jpg";
+  const photoFileName = "/imgs/contestants/" + props.seasonId + "/" + props.contestant._id + ".jpg"
 
   return (
     <div className="contestantSummary">
@@ -12,7 +11,7 @@ function ContestantSummary(props) {
         {props.contestant.firstName} {props.contestant.lastName}
       </a>
     </div>
-  );
-};
+  )
+}
 
-export default ContestantSummary;
+export default ContestantSummary

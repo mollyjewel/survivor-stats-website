@@ -1,8 +1,7 @@
-import { ResponsiveBar, ResponsiveBarCanvas } from '@nivo/bar'
-import React, { useState } from 'react'
+import { ResponsiveBarCanvas } from '@nivo/bar'
 import Box from '@mui/material/Box'
-import TooltipWrapper from './TooltipWrapper'
-import Legend from './Legend'
+import TooltipWrapper from 'components/DataViz/TooltipWrapper'
+import Legend from 'components/DataViz/Legend'
 
 const colors = [
   '#4799bb',
@@ -15,7 +14,7 @@ const colors = [
   '#b3abe2'
 ]
 
-function BarGraph(props) {
+export default function BarGraph(props) {
   const categoryColors = getCategoryColors()
 
   function getCategoryColors() {
@@ -23,7 +22,6 @@ function BarGraph(props) {
     for (let i = 0; i < props.keys.length; i++) {
       categoryColors[props.keys[i]] = colors[i]
     }
-    console.log('categoryColors' + categoryColors)
     return categoryColors
   }
 
@@ -112,35 +110,3 @@ function BarGraph(props) {
     </Box>
   )
 }
-
-export default BarGraph
-
-/*
-Old legend that looked good except for lack of wrapping:
-
-legends={[
-    {
-        anchor: 'top-left',
-        direction: 'row',
-        justify: false,
-        translateX: 0,
-        translateY: -40,
-        itemWidth: 80,
-        itemHeight: 20,
-        itemsSpacing: 4,
-        symbolSize: 16,
-        symbolShape: 'circle',
-        itemDirection: 'left-to-right',
-        itemTextColor: '#777',
-        effects: [
-            {
-                on: 'hover',
-                style: {
-                    itemBackground: 'rgba(0, 0, 0, .03)',
-                    itemOpacity: 1
-                }
-            }
-        ]
-    }
-]}
-*/

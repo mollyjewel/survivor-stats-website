@@ -1,54 +1,30 @@
-import React, { useState, useEffect } from "react";
-import SeasonDataService from "../services/season.service";
-import SeasonData from './SeasonData';
-import { Link, useLocation, useHistory} from "react-router-dom";
+import { useState, useEffect } from "react"
+import SeasonDataService from "services/season.service"
+import SeasonData from 'components/seasonData/SeasonData'
+import {useLocation, useHistory} from "react-router-dom"
 
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import ListSubheader from '@mui/material/ListSubheader'
+import Grid from '@mui/material/Grid'
 
 function SeasonsList(props) {
 
   const search = useLocation().search
-  const history = useHistory();
+  const history = useHistory()
 
   const [seasons, setSeasons] = useState([])
   const [activeSeasonId, setActiveSeasonId] = useState(new URLSearchParams(search).get('id'))
-  const [searchTitle, setSearchTitle] = useState("")
-
-  function onChangeSearchTitle(e) {
-    const newSearchTitle = e.target.value
-    setSearchTitle(newSearchTitle)
-  }
 
   function retrieveSeasons() {
     SeasonDataService.getAll()
       .then(response => {
         setSeasons(response.data)
-        console.log(response.data);
       })
       .catch(e => {
-        console.log(e);
-      });
-  }
-
-  function refreshList() {
-    retrieveSeasons();
-    setActiveSeasonId(null)
-  }
-
-  function findSearchTitle() {
-    SeasonDataService.findByTitle(searchTitle)
-      .then(response => {
-        setSeasons(response.data)
-        console.log(response.data);
+        console.log(e)
       })
-      .catch(e => {
-        console.log(e);
-      });
   }
 
   function handleSeasonChange(seasonId) {
@@ -56,7 +32,7 @@ function SeasonsList(props) {
     setActiveSeasonId(seasonId)
   }
 
-  useEffect(() => {retrieveSeasons()}, []);
+  useEffect(() => {retrieveSeasons()}, [])
 
   return (
         <Grid container spacing={2}>
@@ -104,11 +80,3 @@ function SeasonsList(props) {
   }
 
   export default SeasonsList
-
-
-
-  /*<div>
-    <h4>
-    <img src={"/imgs/season_logo/" + selectedSeason._id + ".png"} alt="season logo" height="100"/>
-     &nbsp;Season {selectedSeason._id} {selectedSeason.title} {selectedSeason.subtitle}</h4>
-  </div>*/
