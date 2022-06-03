@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container'
-import SeasonsList from 'components/seasonData/SeasonsList'
+import SeasonsList from 'components/SeasonsList'
 
 function Seasons() {
   return (

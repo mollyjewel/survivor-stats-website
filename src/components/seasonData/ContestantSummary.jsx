@@ -4,7 +4,7 @@ function ContestantSummary(props) {
 
   return (
     <div className="contestantSummary">
-      <a href={"/contestants/data/" + props.contestant._id}>
+      <a href={"/data/contestants/" + props.contestant._id}>
         <div className="contestantPhoto">
           <img className="img-fluid" src={photoFileName} alt="cast"/>
         </div>

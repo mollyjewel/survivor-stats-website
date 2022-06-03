@@ -10,14 +10,19 @@ import DataVizItem from 'components/DataViz/DataVizItem'
 
 function CastDiversity() {
   return (
-    <Container maxWidth="xxl" className={"chartPageContainer"} sx={{backgroundColor: '#acb4bd'}}>
+    <div>
+    <Container maxWidth="xxl" className={"chartPageContainer"}>
       <Container maxWidth="xl">
-        <Typography variant="h2" className={"chartPageHeader"}>
+        <Typography variant="h2" className={"pageHeader"}>
           How Diverse is Survivor Casting?
         </Typography>
+      </Container>
+    </Container>
 
-        <Divider sx={{margin: '0 0 24px 0'}}/>
+    <Divider sx={{margin: '0 0 24px 0'}}/>
 
+    <Container maxWidth="xxl" sx={{backgroundColor: '#f8f9fa'}}>
+      <Container maxWidth="xl">
         <Grid container spacing={3}>
           <Grid item xs={12} lg={6}>
               <DataVizItem title={'Gender Diversity'} content={<GenderBarGraph/>} />
@@ -34,6 +39,7 @@ function CastDiversity() {
         </Grid>
       </Container>
     </Container>
+    </div>
   )
 }
 

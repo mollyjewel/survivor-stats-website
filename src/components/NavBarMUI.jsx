@@ -1,4 +1,4 @@
-import * as React from 'react'
+import {useState} from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -10,17 +10,21 @@ import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import { Link } from "react-router-dom"
 
-import TorchIcon from 'components/TorchIcon'
+import TorchIcon from 'components/icons/TorchIcon'
 
 const pages = [
   {
     txt: 'Data',
-    link: '/data'
+    link: '/data/seasons'
+  },
+  {
+    txt: 'Analysis',
+    link: '/analysis/castdiversity'
   }
 ]
 
 function NavBarMUI(props) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElNav, setAnchorElNav] = useState(null)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -109,7 +113,7 @@ function NavBarMUI(props) {
                   component={Link}
                   to={page.link}
                   className={'navBarItem'}
-                  sx={{ my: 2, display: 'block' }}
+                  sx={{ my: 2, px: 2, display: 'block' }}
                 >
                   {page.txt}
                 </Typography>
