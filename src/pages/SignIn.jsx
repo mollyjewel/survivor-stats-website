@@ -9,7 +9,6 @@ import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import AuthService from "services/auth.service"
-require('dotenv').config()
 
 export default function GoogleSignin() {
   const [googleUser, setGoogleUser] = useState(undefined)
@@ -21,7 +20,11 @@ export default function GoogleSignin() {
         const { user, token } = res.data
         // Save the JWT inside a cookie
         Cookie.set('token', token)
-        (user.role === 'admin') ? Cookie.set('canEdit', 'true') : Cookie.remove('canEdit')
+        if (user.role === 'admin') {
+          Cookie.set('canEdit', 'true')
+        } else {
+          Cookie.remove('canEdit')
+        }
         setGoogleUser(user.displayName)
       }).catch((err) => {
         throw new Error(err)
