@@ -1,6 +1,56 @@
-# Getting Started with Create React App
+# Survivor Stats Website
+A single-page application that displays, edits, and analyzes data pertaining to
+the hit reality TV show Survivor.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Built on React and MUI libraries.
+
+A version is up and running at: [https://survivorstats.herokuapp.com/](https://survivorstats.herokuapp.com/)
+(You may experience higher than usual latency because of the web server,
+backend server, and database being hosted in far locations on free accounts
+with low performance.)
+
+## Functionality
+
+### View Season Data
+![season data page](public/imgs/docs/season_data.png)
+
+### View Contestant Data
+![contestant data page](public/imgs/docs/contestant_data.png)
+
+### View Analysis of Data
+![analysis page](public/imgs/docs/analysis.png)
+Each analysis page analyzes a specific question by using data visualization.
+Currently, there is only one analysis page as an example, but ideally more would
+be added in the future.
+
+### Sign In with GoogleSignin
+![sign in page](public/imgs/docs/signin.png)
+Sign in with Google to access data manipulation features. After signing in, You
+will only be able to access these features if your google account has already
+been approved for an admin role. Since only admins need to sign in, the page is
+not accessible from the navigation bar. You can access the page at the
+**/signin** path.
+
+### Edit Contestant Data
+![edit contestant page](public/imgs/docs/edit_contestant.png)
+Only an admin who has signed in via the sign-in page can edit contestant data.
+To view this edit feature (but still be unable to submit edits), add the cookie
+**canEdit = true**.  
+
+## Features
+
+### Responsive
+The UI adapts to screen size and viewport, providing a good experience across
+multiple devices.
+
+### Accessible
+Data visualization colors are selected to also be discernible by those who are
+color blind.
+
+## Future Improvements
+1. Optimized images
+2. Server-side logging
+3. Automated tests
 
 ## Available Scripts
 
